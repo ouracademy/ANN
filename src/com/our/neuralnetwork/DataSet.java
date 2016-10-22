@@ -21,4 +21,10 @@ public class DataSet {
         this.out = args;
         return this;
     }
+    
+    
+    @Override
+    public String toString() {
+        return "DataSet{" + "inputs=" + Arrays.toString(inputs) + ", out=" + Arrays.toString(out) + '}';
+    }
 }

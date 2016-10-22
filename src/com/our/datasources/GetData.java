@@ -26,7 +26,7 @@ public class GetData  {
             List<String> dataSource = FileUtils.readFileAsListOfStrings(path);
             dataSet = transformSourceToDataSet(dataSource);
         } catch (Exception ex) {
-
+            ex.printStackTrace();
         }
         return dataSet;
         
@@ -46,15 +46,12 @@ public class GetData  {
     }
 
     private Double[] transformLineToArray(String linea, String separador) {
-         return Arrays.stream(linea.split(separador))
-                .toArray(Double[]::new);
+        return Arrays.stream(linea.split(separador)).map(n -> Double.valueOf(n)).toArray(Double[]::new);
     }
 
     private DataSet transformArrayToDataSet(Double[] array) {
-        int length = array.length;
-        DataSet dataSet = new DataSet(Arrays.copyOfRange(array, 0, array.length - 2));
-        Double[] out = {array[length - 1]};
-        dataSet.out = out;
+        DataSet dataSet = new DataSet(Arrays.copyOfRange(array, 0, array.length - 1));
+        dataSet.out(array[array.length-1]);
         return dataSet;
     }
 

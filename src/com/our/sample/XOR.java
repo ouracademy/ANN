@@ -1,6 +1,5 @@
 package com.our.sample;
 
-import com.our.datasources.GetData;
 import com.our.neuralnetwork.Connection;
 import com.our.neuralnetwork.DataSet;
 import com.our.neuralnetwork.Layer;
