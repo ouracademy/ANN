@@ -10,6 +10,7 @@ import java.util.List;
  * @author Diana Quintanilla Perez
  */
 public class GetData  {
+    private String path;
     
     public static DataSet[] fromFile(String path) {
         return new GetData(path).fromFile();
@@ -34,7 +35,7 @@ public class GetData  {
     private DataSet[] transformSourceToDataSet(List<String> source) {
         int lengthDataSet = source.size();
         DataSet[] dataSet = new DataSet[lengthDataSet];
-        double[] dataOfLine = null;
+        Double[] dataOfLine = null;
         int i = 0;
         for (String line : source) {
             dataOfLine = transformLineToArray(line, ",");
@@ -44,16 +45,16 @@ public class GetData  {
         return dataSet;
     }
 
-    private double[] transformLineToArray(String linea, String separador) {
-        return Arrays.stream(linea.split(separador))
-                .mapToDouble(Double::parseDouble)
-                .toArray();
+    private Double[] transformLineToArray(String linea, String separador) {
+         return Arrays.stream(linea.split(separador))
+                .toArray(Double[]::new);
     }
 
-    private DataSet transformArrayToDataSet(double[] array) {
+    private DataSet transformArrayToDataSet(Double[] array) {
         int length = array.length;
-        DataSet dataSet = new DataSet( Arrays.copyOfRange(array,0,array.length-2);
-        dataSet.out = {array[length - 1]};
+        DataSet dataSet = new DataSet(Arrays.copyOfRange(array, 0, array.length - 2));
+        Double[] out = {array[length - 1]};
+        dataSet.out = out;
         return dataSet;
     }
 

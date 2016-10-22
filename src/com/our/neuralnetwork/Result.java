@@ -13,15 +13,15 @@ import java.util.Arrays;
  */
 public class Result {
 
-    Double[] expected;
-    Double[] actual;
+    public Double[] expected;
+    public Double[] actual;
 
     public Result(Double[] expected, Double[] actual) {
         this.expected = expected;
         this.actual = actual;
     }
 
-    boolean ok() {
+    public boolean ok() {
         return Arrays.equals(this.expected, this.actual);
     }
 

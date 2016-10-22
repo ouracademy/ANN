@@ -1,11 +1,13 @@
 package com.our.sample;
 
+import com.our.datasources.GetData;
 import com.our.neuralnetwork.Connection;
 import com.our.neuralnetwork.DataSet;
 import com.our.neuralnetwork.Layer;
 import com.our.neuralnetwork.NeuralNetwork;
 import com.our.neuralnetwork.Neuron;
 import com.our.neuralnetwork.Result;
+import com.our.datasources.GetData;
 import java.util.Arrays;
 /**
  *
