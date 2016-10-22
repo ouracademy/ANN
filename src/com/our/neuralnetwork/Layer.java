@@ -11,7 +11,7 @@ import java.util.Arrays;
  *
  * @author Arthur Mauricio Delgadillo
  */
-class Layer {
+public class Layer {
     
     Neuron[] neurons;
     

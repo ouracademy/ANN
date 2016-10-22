@@ -1,12 +1,12 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package com.our.neuralnetwork;
+package com.our.sample;
 
+import com.our.neuralnetwork.Connection;
+import com.our.neuralnetwork.DataSet;
+import com.our.neuralnetwork.Layer;
+import com.our.neuralnetwork.NeuralNetwork;
+import com.our.neuralnetwork.Neuron;
+import com.our.neuralnetwork.Result;
 import java.util.Arrays;
-
 /**
  *
  * @author Arthur Mauricio Delgadillo
@@ -42,13 +42,13 @@ public class XOR {
 
         Connection.create(node3, new Neuron("end"), 0);
         return  new NeuralNetwork(inputLayer, layer1, layer2);
-        
     }
+    
     public static void main(String[] args) {
-        
-        NeuralNetwork net = this.buildNeuralNetwork();
-        DataSet[] dataSets = DataSource.getDataSetFromFile("src/com/our/datasources/XOR.txt"");
+        NeuralNetwork net = buildNeuralNetwork();
+        DataSet[] dataSets = GetData.fromFile("src/com/our/datasources/XOR.txt");
         net.train(dataSets);
+        
         Result result = net.test(new DataSet(1.0, 1.0).out(-1.0));
         if (result.ok()) {
             System.out.println("OK!");

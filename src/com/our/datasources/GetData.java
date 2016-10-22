@@ -1,16 +1,9 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package DataSources;
-
+package com.our.datasources;
 
 import com.our.neuralnetwork.DataSet;
 import com.our.Util.FileUtils;
 import java.util.Arrays;
 import java.util.List;
-
 
 /**
  *
@@ -18,7 +11,15 @@ import java.util.List;
  */
 public class GetData  {
     
-    public DataSet[] fromFile(String path){
+    public static DataSet[] fromFile(String path) {
+        return new GetData(path).fromFile();
+    }
+    
+    private GetData(String path){
+        this.path = path;
+    }
+    
+    public DataSet[] fromFile(){
         DataSet[] dataSet = null;
         try {
             List<String> dataSource = FileUtils.readFileAsListOfStrings(path);
@@ -28,7 +29,7 @@ public class GetData  {
         }
         return dataSet;
         
-    }
+    } 
 
     private DataSet[] transformSourceToDataSet(List<String> source) {
         int lengthDataSet = source.size();
@@ -51,10 +52,9 @@ public class GetData  {
 
     private DataSet transformArrayToDataSet(double[] array) {
         int length = array.length;
-        DataSet dataSet = new DataSet(array);
+        DataSet dataSet = new DataSet( Arrays.copyOfRange(array,0,array.length-2);
         dataSet.out = {array[length - 1]};
         return dataSet;
     }
-
 
 }

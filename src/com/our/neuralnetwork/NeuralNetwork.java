@@ -13,7 +13,7 @@ import java.util.Arrays;
  *
  * @author Arthur Mauricio Delgadillo
  */
-class NeuralNetwork {
+public class NeuralNetwork {
 
     private Layer[] layers;
     static int MAX_ITERATIONS = 4000;
