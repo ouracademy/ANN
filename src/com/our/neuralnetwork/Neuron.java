@@ -24,7 +24,7 @@ public class Neuron {
     public String name;
     public double activation;
 
-    Neuron(String name) {
+    public Neuron(String name) {
         this.name = name;
     }
 
