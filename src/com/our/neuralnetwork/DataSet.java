@@ -5,6 +5,8 @@
  */
 package com.our.neuralnetwork;
 
+import java.util.Arrays;
+
 /**
  *
  * @author Arthur Mauricio Delgadillo
