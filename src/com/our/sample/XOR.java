@@ -10,12 +10,11 @@ import java.util.Arrays;
 /**
  *
  * @author Arthur Mauricio Delgadillo
+ * @author Diana Quintanilla Perez
  */
-public class Main { 
-    public static void main(String[] args) {
-        
-        //este main lopuedo cambar por XOR  o como ponemos pa las aplicaciones 
-        
+public class XOR { 
+    
+    public static NeuralNetwork buildNeuralNetwork(){
         Neuron inputX1 = new Neuron("x1");
         Neuron inputX2 = new Neuron("x2");
         Neuron inputBias = new Neuron("bias");
@@ -42,16 +41,14 @@ public class Main {
         Connection.create(inputBias, node3, 0.9);
 
         Connection.create(node3, new Neuron("end"), 0);
-
-        NeuralNetwork net = new NeuralNetwork(inputLayer, layer1, layer2);
-
-        net.train(
-                new DataSet(1.0, 1.0).out(-1.0),
-                new DataSet(1.0, -1.0).out(1.0),
-                new DataSet(-1.0, 1.0).out(1.0),
-                new DataSet(-1.0, -1.0).out(-1.0)
-        );
-
+        return  new NeuralNetwork(inputLayer, layer1, layer2);
+        
+    }
+    public static void main(String[] args) {
+        
+        NeuralNetwork net = this.buildNeuralNetwork();
+        DataSet[] dataSets = DataSource.getDataSetFromFile("src/com/our/datasources/XOR.txt"");
+        net.train(dataSets);
         Result result = net.test(new DataSet(1.0, 1.0).out(-1.0));
         if (result.ok()) {
             System.out.println("OK!");

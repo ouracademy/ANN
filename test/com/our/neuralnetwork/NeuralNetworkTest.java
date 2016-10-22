@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.our.neuralnetwork;
 
 import org.junit.After;
@@ -10,10 +5,6 @@ import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
-/**
- *
- * @author Arthur Mauricio Delgadillo
- */
 public class NeuralNetworkTest extends NeuralNetwork {
 
     NeuralNetwork net;
