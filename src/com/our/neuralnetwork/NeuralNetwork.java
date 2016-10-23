@@ -7,6 +7,7 @@ package com.our.neuralnetwork;
 
 import com.our.neuralnetwork.activation.ActivationFunction;
 import com.our.neuralnetwork.activation.HiperbolicTangent;
+import com.our.neuralnetwork.activation.Sigmoid;
 import java.util.Arrays;
 
 /**
@@ -21,7 +22,7 @@ public class NeuralNetwork {
     public Double bias = -1.0;
     public Double learnFactor = 0.5;
     protected DataSet currentDataSet;
-    private ActivationFunction f = new HiperbolicTangent();
+    private ActivationFunction f;
 
     public NeuralNetwork(Layer... args) {
         this.layers = args;
@@ -34,7 +35,6 @@ public class NeuralNetwork {
         this.layers[0] = input;
         for (int i = 1; i < this.layers.length - 1; i++) {
             this.layers[i] = hidden[i - 1];
-            System.out.println("Layer " + this.layers[i].neurons.length);
             this.layers[i].addBias(bias);
         }
         this.layers[this.layers.length - 1] = output;
@@ -133,6 +133,17 @@ public class NeuralNetwork {
                 .map(x -> this.f.normalize(x))
                 .toArray(Double[]::new)
         );
+    }
+    
+    public void setActivationFunction(String funcion) {
+        switch (funcion) {
+            case "Sigmoidea":
+                this.f = new Sigmoid();
+                break;
+            case "Tangent":
+                this.f = new HiperbolicTangent();
+                break;
+        }
     }
 
 }

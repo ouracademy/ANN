@@ -1,6 +1,5 @@
 package com.our.sample;
 
-import com.our.neuralnetwork.Connection;
 import com.our.neuralnetwork.DataSet;
 import com.our.neuralnetwork.Layer;
 import com.our.neuralnetwork.NeuralNetwork;
@@ -14,39 +13,39 @@ import java.util.Arrays;
  * @author Diana Quintanilla Perez
  */
 public class Pregunta1 { 
-    static Double defaultWeight = 0;
-    static Double numberOfInputs = 6;
-    static Double numberOfOutputs = 1;
-    static Double numberOfHiddenLayers = 5;
-    static Double numberOfNeuronsInHiddenLayer = numberOfInputs;
+    static Double defaultWeight = 0.0;
+    static Integer numberOfInputs = 6;   
+    static Integer numberOfOutputs = 1;
+    static Integer numberOfHiddenLayers = 5;
+    static Integer numberOfNeuronsInHiddenLayer = numberOfInputs;
     
     public static NeuralNetwork buildNeuralNetwork() {
         Layer interfaceLayer = new Layer(makeNeurons(numberOfInputs));
         Layer[] hiddenLayers = buildHiddenLayers();
         Layer outputLayer = new Layer(makeNeurons(numberOfOutputs));
         
-        interfaceLayer.connect(hiddenLayer[0], defaultWeight); 
+        interfaceLayer.connect(hiddenLayers[0], defaultWeight); 
         for(int i=1; i< hiddenLayers.lenght - 1; i++){
-            hiddenLayer[i].connect(hiddenLayer[i+1]);
+            hiddenLayers[i].connect(hiddenLayers[i+1], defaultWeight);
         }
-        hiddenLayer[hiddenLayer.lenght-1].connect(outputLayer);
-        outputLayer.connect(null);
+        hiddenLayers[hiddenLayers.length-1].connect(outputLayer, defaultWeight);
+        outputLayer.connect(null, defaultWeight);
         
         return new NeuralNetwork(interfaceLayer, hiddenLayers, outputLayer);
     }
     
-    static buildHiddenLayers(){
-        Layer[] result = new Layers[numberOfHiddenLayers] 
-        for(int i=0; i< hiddenLayers.lenght; i++){
+    private static Layer[] buildHiddenLayers(){
+        Layer[] result = new Layer[numberOfHiddenLayers];
+        for(int i=0; i< result.length; i++){
             result[i]  = new Layer(makeNeurons(numberOfNeuronsInHiddenLayer));
         }
         return result;
     }
     
     
-    private Neuron[] makeNeurons(int numbersOfNeurons){
-        Neuron[] neurons = new Neuron[numbersOfNeurons];
-        for(int i=0;i<numbersOfNeurons,i++){
+    private static Neuron[] makeNeurons(int numberOfNeurons){
+        Neuron[] neurons = new Neuron[numberOfNeurons];
+        for(int i=0;i<numberOfNeurons; i++){
              neurons[i] = new Neuron("n"+i);
         }
         return neurons;
@@ -54,6 +53,7 @@ public class Pregunta1 {
     
     public static void main(String[] args) {
         NeuralNetwork net = buildNeuralNetwork();
+        net.setActivationFunction();
         DataSet[] dataSets = GetData.fromFile("src/com/our/datasources/DN80.txt");
         net.train(dataSets);
         
