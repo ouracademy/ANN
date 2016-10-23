@@ -14,7 +14,6 @@ import java.util.Arrays;
 public class Main { 
     public static void main(String[] args) {
         
-        System.out.println("Hello world");
         Neuron inputX1 = new Neuron("x1");
         Neuron inputX2 = new Neuron("x2");
         Neuron inputBias = new Neuron("bias");
@@ -23,6 +22,7 @@ public class Main {
 
         Neuron node1 = new Neuron("n1");
         Neuron node2 = new Neuron("n2");
+        Neuron layer1Bias = new Neuron("bias");
         Layer layer1 = new Layer(node1, node2);
 
         Neuron node3 = new Neuron("n3");
@@ -38,7 +38,7 @@ public class Main {
 
         Connection.create(node1, node3, 0.1);
         Connection.create(node2, node3, 0.5);
-        Connection.create(inputBias, node3, 0.9);
+        Connection.create(layer1Bias, node3, 0.9);
 
         Connection.create(node3, new Neuron("end"), 0);
 

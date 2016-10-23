@@ -19,6 +19,7 @@ public class NeuralNetworkTest extends NeuralNetwork {
 
         Neuron node1 = new Neuron("n1");
         Neuron node2 = new Neuron("n2");
+        Neuron layer1Bias = new Neuron("bias");
         Layer layer1 = new Layer(node1, node2);
 
         Neuron node3 = new Neuron("n3");
@@ -34,7 +35,7 @@ public class NeuralNetworkTest extends NeuralNetwork {
 
         Connection.create(node1, node3, 0.1);
         Connection.create(node2, node3, 0.5);
-        Connection.create(inputBias, node3, 0.9);
+        Connection.create(layer1Bias, node3, 0.9);
 
         Connection.create(node3, new Neuron("end"), 0);
 
