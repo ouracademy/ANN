@@ -33,13 +33,9 @@ public class Layer {
         }
     }
     
-    creo q mejor haces muy bien la API luego vas aca...
-    si te sientes comoda con la API
-    recien empiezas a implementarlo..bueno eso digo yap 
-    
-    public connect(Layer to, Double weight) {
+    public void connect(Layer to, Double weight) {
         for(Neuron neuron: this.neurons) {
-            for(int i=0; i<to.neurons.lenght; i++){
+            for(int i=0; i<to.neurons.length; i++){
                  Connection.create(neuron, to.neurons[i], weight);
             }
         }

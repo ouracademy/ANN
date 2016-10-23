@@ -14,7 +14,7 @@ import java.util.Arrays;
  */
 public class Pregunta1 { 
     static Double defaultWeight = 0.0;
-    static Integer numberOfInputs = 6;   
+    static Integer numberOfInputs = 6;  //include bias? 
     static Integer numberOfOutputs = 1;
     static Integer numberOfHiddenLayers = 5;
     static Integer numberOfNeuronsInHiddenLayer = numberOfInputs;
@@ -53,7 +53,6 @@ public class Pregunta1 {
     
     public static void main(String[] args) {
         NeuralNetwork net = buildNeuralNetwork();
-        net.setActivationFunction();
         DataSet[] dataSets = GetData.fromFile("src/com/our/datasources/DN80.txt");
         net.train(dataSets);
         
