@@ -20,7 +20,7 @@ public class Pregunta1 {
     static Double numberOfHiddenLayers = 5;
     static Double numberOfNeuronsInHiddenLayer = numberOfInputs;
     
-    public static NeuralNetwork buildNeuralNetwork(){
+    public static NeuralNetwork buildNeuralNetwork() {
         Layer interfaceLayer = new Layer(makeNeurons(numberOfInputs));
         Layer[] hiddenLayers = buildHiddenLayers();
         Layer outputLayer = new Layer(makeNeurons(numberOfOutputs));
@@ -32,16 +32,14 @@ public class Pregunta1 {
         hiddenLayer[hiddenLayer.lenght-1].connect(outputLayer);
         outputLayer.connect(null);
         
-        return new NeuralNetwork();
+        return new NeuralNetwork(interfaceLayer, hiddenLayers, outputLayer);
     }
     
     static buildHiddenLayers(){
         Layer[] result = new Layers[numberOfHiddenLayers] 
-        
         for(int i=0; i< hiddenLayers.lenght; i++){
             result[i]  = new Layer(makeNeurons(numberOfNeuronsInHiddenLayer));
         }
-        
         return result;
     }
     
@@ -55,13 +53,7 @@ public class Pregunta1 {
     }
     
     public static void main(String[] args) {
-        NeuralNetwork net = buildNeuralNetwork(10);
-   
-        NeuralNetwork.build(new LayerOptions([4,5])
-        
-        //las entradasy salidas estan entre 0 y 1 //camviara  funcion Sigmoide y sin aproximacion a 0  o 1 
-        
-        
+        NeuralNetwork net = buildNeuralNetwork();
         DataSet[] dataSets = GetData.fromFile("src/com/our/datasources/DN80.txt");
         net.train(dataSets);
         

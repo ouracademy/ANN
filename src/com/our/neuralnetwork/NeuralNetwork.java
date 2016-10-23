@@ -29,6 +29,16 @@ public class NeuralNetwork {
             this.layers[i].addBias(bias);
         }
     }
+    public NeuralNetwork(Layer input, Layer[] hidden, Layer output) {
+        this.layers = new Layer[hidden.length + 2];
+        this.layers[0] = input;
+        for (int i = 1; i < this.layers.length - 1; i++) {
+            this.layers[i] = hidden[i - 1];
+            System.out.println("Layer " + this.layers[i].neurons.length);
+            this.layers[i].addBias(bias);
+        }
+        this.layers[this.layers.length - 1] = output;
+    }
 
     public void train(DataSet... dataSets) {
         this.iterations = 0;
