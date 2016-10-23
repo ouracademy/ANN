@@ -1,10 +1,10 @@
 package com.our.sample;
 
 import com.our.neuralnetwork.DataSet;
-import com.our.neuralnetwork.Layer;
 import com.our.neuralnetwork.NeuralNetwork;
 import com.our.neuralnetwork.Result;
 import com.our.datasources.GetData;
+import com.our.neuralnetwork.NeuralNetworkBuilder;
 import java.util.Arrays;
 
 /**
@@ -14,44 +14,11 @@ import java.util.Arrays;
  */
 public class Pregunta1 {
 
-    static Double defaultWeight = 1.0;
-    static Integer numberOfInputs = 6;
-    static Integer numberOfOutputs = 1;
-    static Integer numberOfHiddenLayers = 10;
-    static Integer numberOfNeuronsInHiddenLayer = numberOfInputs;
-
-    public static NeuralNetwork buildNeuralNetwork() {
-        Layer interfaceLayer = Layer.withNeurons("input", numberOfInputs);
-        Layer[] hiddenLayers = buildHiddenLayers();
-        Layer outputLayer = Layer.withNeurons("output", numberOfOutputs);
-
-        interfaceLayer.connect(hiddenLayers[0], defaultWeight);
-        for (int i = 0; i < hiddenLayers.length - 1; i++) {
-            hiddenLayers[i].connect(hiddenLayers[i + 1], defaultWeight);
-        }
-        hiddenLayers[hiddenLayers.length - 1].connect(outputLayer, defaultWeight);
-
-        System.out.println(interfaceLayer);
-        for (Layer hiddenLayer : hiddenLayers) {
-            System.out.println(hiddenLayer);
-        }
-        System.out.println(outputLayer);
-
-        return new NeuralNetwork(interfaceLayer, hiddenLayers, outputLayer);
-    }
-
-    private static Layer[] buildHiddenLayers() {
-        Layer[] result = new Layer[numberOfHiddenLayers];
-        for (int i = 0; i < numberOfHiddenLayers; i++) {
-            result[i] = Layer.withNeurons("hidden(" + (i + 1) + ")", numberOfNeuronsInHiddenLayer);
-        }
-        return result;
-    }
-
     public static void main(String[] args) {
-        NeuralNetwork net = buildNeuralNetwork();
+        NeuralNetwork net = new NeuralNetworkBuilder(6, 1).build();
+        net.iterations = 10000;
+
         DataSet[] dataSets = GetData.fromFile("src/com/our/datasources/DN80.txt");
-        NeuralNetwork.MAX_ITERATIONS = 10000;
         net.train(dataSets);
 
         Result result = net.test(
@@ -63,7 +30,7 @@ public class Pregunta1 {
                         0.727272727272727
                 ).out(0.167832167832168)
         );
-        
+
         if (result.ok(0.2)) {
             System.out.println("OK!");
         } else {

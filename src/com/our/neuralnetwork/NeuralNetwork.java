@@ -7,7 +7,7 @@ package com.our.neuralnetwork;
 
 import com.our.neuralnetwork.activation.ActivationFunction;
 import com.our.neuralnetwork.activation.HiperbolicTangent;
-import com.our.neuralnetwork.activation.Sigmoid;
+import java.util.Arrays;
 
 /**
  *
@@ -15,9 +15,9 @@ import com.our.neuralnetwork.activation.Sigmoid;
  */
 public class NeuralNetwork {
 
-    private Layer[] layers;
-    public static int MAX_ITERATIONS = 4000;
-    int iterations;
+    protected Layer[] layers;
+    public int maxIterations = 4000;
+    public int iterations;
     public Double bias = -1.0;
     public Double learnFactor = 0.5;
     protected DataSet currentDataSet;
@@ -29,16 +29,22 @@ public class NeuralNetwork {
             this.layers[i].addBias(bias);
         }
     }
+    
+    public NeuralNetwork withActivationFunction(ActivationFunction f) {
+        this.f = f;
+        return this;
+    }
 
+    // TODO test this! 
     public NeuralNetwork(Layer input, Layer[] hidden, Layer output) {
         this.layers = new Layer[hidden.length + 2];
         this.layers[0] = input;
 
-        for (int i = 1; i < this.layers.length - 1; i++) {
+        for (int i = 1; i < hidden.length + 2 - 1; i++) {
             this.layers[i] = hidden[i - 1];
             this.layers[i].addBias(bias);
         }
-        this.layers[this.layers.length - 1] = output;
+        this.layers[hidden.length + 2 - 1] = output;
     }
 
     public void train(DataSet... dataSets) {
@@ -54,9 +60,9 @@ public class NeuralNetwork {
         }
     }
 
-    private boolean stopCondition() {
+    protected boolean stopCondition() {
         iterations++;
-        return iterations > MAX_ITERATIONS;
+        return iterations >= maxIterations;
     }
 
     protected Double[] feedForward(DataSet arg) {
@@ -135,16 +141,4 @@ public class NeuralNetwork {
                 this.feedForward(dataSet)
         );
     }
-
-    public void setActivationFunction(String funcion) {
-        switch (funcion) {
-            case "Sigmoidea":
-                this.f = new Sigmoid();
-                break;
-            case "Tangent":
-                this.f = new HiperbolicTangent();
-                break;
-        }
-    }
-
 }
