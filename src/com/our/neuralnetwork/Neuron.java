@@ -47,27 +47,27 @@ public class Neuron {
                 .reduce(sum, (accumulator, _item) -> accumulator + _item);
         return sum;
     }
-    
-    public String[] inputNeurons(){
+
+    public String[] inputNeurons() {
         return this.inputs.stream().map(n -> n.from)
                 .map(from -> from.name).toArray(String[]::new);
     }
-    
-    public String[] outputNeurons(){
+
+    public String[] outputNeurons() {
         return this.outputs.stream().map(n -> n.to)
                 .map(to -> to.name).toArray(String[]::new);
     }
 
     @Override
     public String toString() {
+        return this.toJSON();
+    }
+    
+    public String toJSON() {
         return "{\"name\":\"" + name + "\","
                 + " \"inputs\":" + this.inputs + ","
                 + " \"outputs\":" + this.outputs + '}';
     }
-//    
-//    public String toJSON(String[] array) {
-//        return Arrays.toString(Arrays.stream(array).map(x -> "\"" + x + "\"").toArray(String[]::new));
-//    }
 
     void updateError() {
         for (Connection outputConnections : this.outputs) {
@@ -83,6 +83,8 @@ public class Neuron {
                     * outNeuron.error
                     * activationFunction.derived(outNeuron.activation)
                     * outputConnections.value;
+
+            //System.out.println(name + "" + outputConnections.weight);
         }
     }
 

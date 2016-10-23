@@ -8,7 +8,6 @@ package com.our.neuralnetwork;
 import com.our.neuralnetwork.activation.ActivationFunction;
 import com.our.neuralnetwork.activation.HiperbolicTangent;
 import com.our.neuralnetwork.activation.Sigmoid;
-import java.util.Arrays;
 
 /**
  *
@@ -17,7 +16,7 @@ import java.util.Arrays;
 public class NeuralNetwork {
 
     private Layer[] layers;
-    static int MAX_ITERATIONS = 4000;
+    public static int MAX_ITERATIONS = 4000;
     int iterations;
     public Double bias = -1.0;
     public Double learnFactor = 0.5;
@@ -117,6 +116,7 @@ public class NeuralNetwork {
         for (int i = this.layers.length - 2; i > 0; i--) {
             for (Neuron neuron : this.layers[i].neurons) {
                 neuron.updateError();
+                //System.out.println(neuron.name + "" + neuron.error);
             }
         }
     }
@@ -130,12 +130,9 @@ public class NeuralNetwork {
     }
 
     public Result test(DataSet dataSet) {
-
         return new Result(
                 dataSet.out,
-                Arrays.stream(this.feedForward(dataSet))
-                .map(x -> this.f.normalize(x))
-                .toArray(Double[]::new)
+                this.feedForward(dataSet)
         );
     }
 

@@ -84,11 +84,11 @@ public class NeuralNetworkTest extends NeuralNetwork {
         System.out.println(result2);
         System.out.println(result3);
         System.out.println(result4);
-
-        assertTrue(result1.ok());
-        assertTrue(result2.ok());
-        assertTrue(result3.ok());
-        assertTrue(result4.ok());
+        
+        assertTrue(result1.ok(0.25));
+        assertTrue(result2.ok(0.25));
+        assertTrue(result3.ok(0.25));
+        assertTrue(result4.ok(0.25));
     }
 
 }

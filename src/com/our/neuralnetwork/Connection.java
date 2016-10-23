@@ -29,13 +29,17 @@ public class Connection {
         this.weight = weight;
         this.value = 0;
     }
-    
-    public double synapse(){
+
+    public double synapse() {
         return this.weight * this.value;
     }
 
     @Override
     public String toString() {
-        return "Connection{" + "from=" + from.name + ", to=" + to.name + ", weight=" + weight + '}';
+        return toJSON();
+    }
+
+    public String toJSON() {
+        return "{" + "\"from\":\"" + from.name + "\", \"to\":\"" + to.name + "\", \"weight\":\"" + weight + "\"}";
     }
 }

@@ -24,10 +24,12 @@ public class XOR {
 
         Neuron node1 = new Neuron("n1");
         Neuron node2 = new Neuron("n2");
-        Layer layer1 = new Layer(node1, node2);
+        Neuron layer1Bias = new Neuron("bias");
+        Layer layer1 = new Layer(node1, node2, layer1Bias);
 
         Neuron node3 = new Neuron("n3");
-        Layer layer2 = new Layer(node3);
+        Neuron layer2Bias = new Neuron("bias");
+        Layer layer2 = new Layer(node3, layer2Bias);
 
         Connection.create(inputX1, node1, 0.7);
         Connection.create(inputX2, node1, 0.9);
@@ -39,10 +41,9 @@ public class XOR {
 
         Connection.create(node1, node3, 0.1);
         Connection.create(node2, node3, 0.5);
-        Connection.create(inputBias, node3, 0.9);
-
-        Connection.create(node3, new Neuron("end"), 0);
-        return  new NeuralNetwork(inputLayer, layer1, layer2);
+        Connection.create(layer1Bias, node3, 0.9);
+        
+        return new NeuralNetwork(inputLayer, layer1, layer2);
     }
     
     public static void main(String[] args) {
@@ -51,10 +52,10 @@ public class XOR {
         net.train(dataSets);
         
         Result result = net.test(new DataSet(1.0, 1.0).out(-1.0));
-        if (result.ok()) {
+        if (result.ok(0.01)) {
             System.out.println("OK!");
         } else {
-            System.out.println("Expected:" + Arrays.toString(result.expected)
+            System.out.println("Fail expected:" + Arrays.toString(result.expected)
                     + "but get" + Arrays.toString(result.actual));
         }
     }

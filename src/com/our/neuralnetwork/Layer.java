@@ -61,7 +61,8 @@ public class Layer {
 
     public void connect(Layer to, Double weight) {
         for (Neuron from : this.neurons) {
-            for (Neuron toNeuron : to.neurons) {
+            for (int i = 0; i < to.biasPosition(); i++) {
+                Neuron toNeuron = to.neurons[i];
                 Connection.create(from, toNeuron, weight);
             }
         }

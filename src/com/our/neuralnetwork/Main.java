@@ -51,10 +51,11 @@ public class Main {
         );
 
         Result result = net.test(new DataSet(1.0, 1.0).out(-1.0));
-        if (result.ok()) {
+        
+        if (result.ok(0.01)) {
             System.out.println("OK!");
         } else {
-            System.out.println("Expected:" + Arrays.toString(result.expected)
+            System.out.println("Fails expected:" + Arrays.toString(result.expected)
                     + "but get" + Arrays.toString(result.actual));
         }
     }

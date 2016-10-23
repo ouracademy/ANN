@@ -17,12 +17,20 @@ public class Result {
     public Double[] actual;
 
     public Result(Double[] expected, Double[] actual) {
+        if (expected.length != actual.length) {
+            throw new IllegalArgumentException("Different expected and actual length");
+        }
         this.expected = expected;
         this.actual = actual;
     }
 
-    public boolean ok() {
-        return Arrays.equals(this.expected, this.actual);
+    public boolean ok(Double delta) {
+        for (int i = 0; i < this.expected.length; i++) {
+            System.out.println("ex: " + this.expected[i] + " ac:" + this.actual[i]);
+            if(!(Math.abs(this.expected[i] - this.actual[i]) <= delta))
+                return false;
+        }
+        return true;
     }
 
     @Override
