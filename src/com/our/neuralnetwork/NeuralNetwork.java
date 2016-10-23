@@ -22,7 +22,7 @@ public class NeuralNetwork {
     public Double bias = -1.0;
     public Double learnFactor = 0.5;
     protected DataSet currentDataSet;
-    private ActivationFunction f;
+    private ActivationFunction f = new HiperbolicTangent();
 
     public NeuralNetwork(Layer... args) {
         this.layers = args;
@@ -34,6 +34,7 @@ public class NeuralNetwork {
     public NeuralNetwork(Layer input, Layer[] hidden, Layer output) {
         this.layers = new Layer[hidden.length + 2];
         this.layers[0] = input;
+        
         for (int i = 1; i < this.layers.length - 1; i++) {
             this.layers[i] = hidden[i - 1];
             this.layers[i].addBias(bias);

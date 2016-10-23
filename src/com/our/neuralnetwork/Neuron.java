@@ -8,6 +8,7 @@ package com.our.neuralnetwork;
 import com.our.neuralnetwork.activation.ActivationFunction;
 import com.our.neuralnetwork.activation.HiperbolicTangent;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -46,10 +47,22 @@ public class Neuron {
                 .reduce(sum, (accumulator, _item) -> accumulator + _item);
         return sum;
     }
+    
+    public String[] inputNeurons(){
+        return this.inputs.stream().map(n -> n.from)
+                .map(from -> from.name).toArray(String[]::new);
+    }
+    
+    public String[] outputNeurons(){
+        return this.inputs.stream().map(n -> n.to)
+                .map(to -> to.name).toArray(String[]::new);
+    }
 
     @Override
     public String toString() {
-        return "Neuron{" + "inputs=" + inputs + ", output=" + outputs + '}';
+        return "Neuron{ name=" + name + ","
+                + " inputs=" + Arrays.toString(inputNeurons()) + ","
+                + " outputs=" + Arrays.toString(outputNeurons()) + '}';
     }
 
     void updateError() {
