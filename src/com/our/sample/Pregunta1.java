@@ -25,7 +25,7 @@ public class Pregunta1 {
         Layer outputLayer = new Layer(makeNeurons(numberOfOutputs));
         
         interfaceLayer.connect(hiddenLayers[0], defaultWeight); 
-        for(int i=1; i< hiddenLayers.lenght - 1; i++){
+        for(int i=1; i< hiddenLayers.length - 1; i++){
             hiddenLayers[i].connect(hiddenLayers[i+1], defaultWeight);
         }
         hiddenLayers[hiddenLayers.length-1].connect(outputLayer, defaultWeight);

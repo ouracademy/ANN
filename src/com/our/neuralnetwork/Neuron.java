@@ -26,6 +26,7 @@ public class Neuron {
 
     public Neuron(String name) {
         this.name = name;
+        //asiganrlo aca 
     }
 
     public double calculateActivation() {
