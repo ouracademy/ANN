@@ -29,14 +29,17 @@ public class Layer {
     public void addBias(double bias){
         for(Neuron neuron: this.neurons){
             int biasPosition = neuron.inputs.size() - 1;
-            neuron.inputs.get(biasPosition).value = -1;
+            neuron.inputs.get(biasPosition).value = bias;
         }
     }
     
     public void connect(Layer to, Double weight) {
+        
         for(Neuron neuron: this.neurons) {
-            for(int i=0; i<to.neurons.length; i++){
-                 Connection.create(neuron, to.neurons[i], weight);
+            if(to!=null){
+                for(int i=0; i<to.neurons.length; i++){
+                     Connection.create(neuron, to.neurons[i], weight);
+                }
             }
         }
     }

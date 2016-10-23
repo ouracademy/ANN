@@ -14,7 +14,7 @@ import java.util.Arrays;
  */
 public class Pregunta1 { 
     static Double defaultWeight = 0.0;
-    static Integer numberOfInputs = 6;  //include bias? 
+    static Integer numberOfInputs = 6;  
     static Integer numberOfOutputs = 1;
     static Integer numberOfHiddenLayers = 5;
     static Integer numberOfNeuronsInHiddenLayer = numberOfInputs;
@@ -29,7 +29,7 @@ public class Pregunta1 {
             hiddenLayers[i].connect(hiddenLayers[i+1], defaultWeight);
         }
         hiddenLayers[hiddenLayers.length-1].connect(outputLayer, defaultWeight);
-        outputLayer.connect(null, defaultWeight);
+        outputLayer.connect(new Layer(new Neuron("out")), defaultWeight);
         
         return new NeuralNetwork(interfaceLayer, hiddenLayers, outputLayer);
     }
@@ -44,10 +44,11 @@ public class Pregunta1 {
     
     
     private static Neuron[] makeNeurons(int numberOfNeurons){
-        Neuron[] neurons = new Neuron[numberOfNeurons];
+        Neuron[] neurons = new Neuron[numberOfNeurons+1];
         for(int i=0;i<numberOfNeurons; i++){
              neurons[i] = new Neuron("n"+i);
         }
+        neurons[numberOfNeurons] = new Neuron("bias");
         return neurons;
     }
     
