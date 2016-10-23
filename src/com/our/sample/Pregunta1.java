@@ -16,13 +16,13 @@ import java.util.Arrays;
 public class Pregunta1 {
 
     static Double defaultWeight = 1.0;
-    static Integer numberOfInputs = 5;
+    static Integer numberOfInputs = 6;
     static Integer numberOfOutputs = 1;
     static Integer numberOfHiddenLayers = 5;
     static Integer numberOfNeuronsInHiddenLayer = numberOfInputs;
 
     public static NeuralNetwork buildNeuralNetwork() {
-        Layer interfaceLayer = Layer.withNeurons("input", numberOfInputs);
+        Layer interfaceLayer = Layer.withNeurons("input", numberOfInputs + 1);
         Layer[] hiddenLayers = buildHiddenLayers();
         Layer outputLayer = Layer.withNeurons("output", numberOfOutputs);
 
@@ -34,9 +34,10 @@ public class Pregunta1 {
         outputLayer.connect(new Layer(new Neuron("out")), defaultWeight);
 
         System.out.println(interfaceLayer);
-        for (int i = 0; i < hiddenLayers.length - 1; i++) {
-            System.out.println(i + "" + hiddenLayers[i]);
+        for (Layer hiddenLayer : hiddenLayers) {
+            System.out.println(hiddenLayer);
         }
+        System.out.println(outputLayer);
 
         return new NeuralNetwork(interfaceLayer, hiddenLayers, outputLayer);
     }
@@ -44,7 +45,7 @@ public class Pregunta1 {
     private static Layer[] buildHiddenLayers() {
         Layer[] result = new Layer[numberOfHiddenLayers];
         for (int i = 0; i < numberOfHiddenLayers; i++) {
-            result[i] = Layer.withNeurons("hidden(" + i + ")", numberOfNeuronsInHiddenLayer);
+            result[i] = Layer.withNeurons("hidden(" + (i + 1) + ")", numberOfNeuronsInHiddenLayer);
         }
         return result;
     }
@@ -52,9 +53,10 @@ public class Pregunta1 {
     public static void main(String[] args) {
         NeuralNetwork net = buildNeuralNetwork();
         DataSet[] dataSets = GetData.fromFile("src/com/our/datasources/DN80.txt");
+        System.out.println(Arrays.toString(dataSets));
         net.train(dataSets);
 
-        Result result = net.test(new DataSet(1.0, 1.0).out(-1.0));
+        Result result = net.test(new DataSet(1.0, 1.0, 1.0, 1.0, 1.0, 1.0).out(1.0));
         if (result.ok()) {
             System.out.println("OK!");
         } else {

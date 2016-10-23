@@ -27,14 +27,14 @@ public class NeuralNetwork {
     public NeuralNetwork(Layer... args) {
         this.layers = args;
         for (int i = 1; i < this.layers.length; i++) {
-            this.layers[i].addBias(bias); 
+            this.layers[i].addBias(bias);
         }
     }
-    
+
     public NeuralNetwork(Layer input, Layer[] hidden, Layer output) {
         this.layers = new Layer[hidden.length + 2];
         this.layers[0] = input;
-        
+
         for (int i = 1; i < this.layers.length - 1; i++) {
             this.layers[i] = hidden[i - 1];
             this.layers[i].addBias(bias);
@@ -64,7 +64,9 @@ public class NeuralNetwork {
         this.currentDataSet = arg;
         this.feedInput();
         for (int i = 1; i < this.layers.length; i++) { // deep layers
-            for (Neuron neuron : this.layers[i].neurons) {
+            Layer layer = this.layers[i];
+            for (int j = 0; j < layer.biasPosition(); j++) {
+                Neuron neuron = layer.neurons[j];
                 neuron.calculateActivation();
             }
         }
@@ -100,7 +102,7 @@ public class NeuralNetwork {
     }
 
     private void lastLayerErrors(Double y[]) {
-        for (int i = 0; i < this.lastLayer().neurons.length; i++) {
+        for (int i = 0; i < this.lastLayer().neurons.length - 1; i++) {
             Neuron neuron = this.lastLayer().neurons[i];
             neuron.error = this.currentDataSet.out[i] - f.normalize(y[i]);
         }
@@ -136,7 +138,7 @@ public class NeuralNetwork {
                 .toArray(Double[]::new)
         );
     }
-    
+
     public void setActivationFunction(String funcion) {
         switch (funcion) {
             case "Sigmoidea":

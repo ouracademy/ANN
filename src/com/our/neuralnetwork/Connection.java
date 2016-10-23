@@ -36,7 +36,6 @@ public class Connection {
 
     @Override
     public String toString() {
-        return "Synapse{" + "weight=" + weight + '}';
+        return "Connection{" + "from=" + from.name + ", to=" + to.name + ", weight=" + weight + '}';
     }
-
 }

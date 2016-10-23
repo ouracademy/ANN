@@ -23,7 +23,7 @@ public class Layer {
     private static Neuron[] makeNeurons(String name, int numberOfNeurons) {
         Neuron[] neurons = new Neuron[numberOfNeurons + 1];
         for (int i = 0; i < numberOfNeurons; i++) {
-            neurons[i] = new Neuron(name + "n" + i);
+            neurons[i] = new Neuron(name + "n" + (i + 1));
         }
         neurons[numberOfNeurons] = new Neuron("bias");
         return neurons;
@@ -42,15 +42,21 @@ public class Layer {
     public Double[] outputs() {
         return Arrays
                 .stream(this.neurons)
-                .map(neuron -> neuron.outputs.get(0).value)
+                .map(neuron -> neuron.activation)
+                .limit(this.biasPosition())
                 .toArray(Double[]::new);
     }
 
     public void addBias(double bias) {
-        for (Neuron neuron : this.neurons) {
+        for (int i = 0; i < this.biasPosition(); i++) {
+            Neuron neuron = this.neurons[i];
             int biasPosition = neuron.inputs.size() - 1;
             neuron.inputs.get(biasPosition).value = bias;
         }
+    }
+
+    public Integer biasPosition() {
+        return this.neurons.length - 1;
     }
 
     public void connect(Layer to, Double weight) {
@@ -63,7 +69,7 @@ public class Layer {
 
     @Override
     public String toString() {
-        return "Layer{" + "name=" + name + ", neurons=" + Arrays.toString(neurons) + '}';
+        return "{\"Layer\": {" + "\"name\":\"" + name + "\", \"neurons\":" + Arrays.toString(neurons) + "}}";
     }
 
 }

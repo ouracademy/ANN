@@ -54,16 +54,20 @@ public class Neuron {
     }
     
     public String[] outputNeurons(){
-        return this.inputs.stream().map(n -> n.to)
+        return this.outputs.stream().map(n -> n.to)
                 .map(to -> to.name).toArray(String[]::new);
     }
 
     @Override
     public String toString() {
-        return "Neuron{ name=" + name + ","
-                + " inputs=" + Arrays.toString(inputNeurons()) + ","
-                + " outputs=" + Arrays.toString(outputNeurons()) + '}';
+        return "{\"name\":\"" + name + "\","
+                + " \"inputs\":" + this.inputs + ","
+                + " \"outputs\":" + this.outputs + '}';
     }
+//    
+//    public String toJSON(String[] array) {
+//        return Arrays.toString(Arrays.stream(array).map(x -> "\"" + x + "\"").toArray(String[]::new));
+//    }
 
     void updateError() {
         for (Connection outputConnections : this.outputs) {
