@@ -20,7 +20,7 @@ public class Layer {
         return new Layer(name, makeNeurons(name, numberOfNeurons));
     }
 
-    private static Neuron[] makeNeurons(String name, int numberOfNeurons) {
+    protected static Neuron[] makeNeurons(String name, int numberOfNeurons) {
         Neuron[] neurons = new Neuron[numberOfNeurons + 1];
         for (int i = 0; i < numberOfNeurons; i++) {
             neurons[i] = new Neuron(name + "n" + (i + 1));

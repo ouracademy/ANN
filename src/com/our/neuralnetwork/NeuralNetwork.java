@@ -7,7 +7,6 @@ package com.our.neuralnetwork;
 
 import com.our.neuralnetwork.activation.ActivationFunction;
 import com.our.neuralnetwork.activation.HiperbolicTangent;
-import java.util.Arrays;
 
 /**
  *

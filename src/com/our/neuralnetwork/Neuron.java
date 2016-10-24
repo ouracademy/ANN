@@ -8,8 +8,8 @@ package com.our.neuralnetwork;
 import com.our.neuralnetwork.activation.ActivationFunction;
 import com.our.neuralnetwork.activation.HiperbolicTangent;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 /**
  *
@@ -68,6 +68,29 @@ public class Neuron {
                 + " \"inputs\":" + this.inputs + ","
                 + " \"outputs\":" + this.outputs + '}';
     }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 37 * hash + Objects.hashCode(this.name);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Neuron other = (Neuron) obj;
+        if (!Objects.equals(this.name, other.name)) {
+            return false;
+        }
+        return true;
+    }
+    
 
     void updateError() {
         for (Connection outputConnections : this.outputs) {
