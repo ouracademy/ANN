@@ -7,6 +7,7 @@ package com.our.neuralnetwork;
 
 import com.our.neuralnetwork.activation.ActivationFunction;
 import com.our.neuralnetwork.activation.HiperbolicTangent;
+import java.util.Arrays;
 
 /**
  *
@@ -28,7 +29,7 @@ public class NeuralNetwork {
             this.layers[i].addBias(bias);
         }
     }
-    
+
     public NeuralNetwork withActivationFunction(ActivationFunction f) {
         this.f = f;
         return this;
@@ -44,6 +45,14 @@ public class NeuralNetwork {
             this.layers[i].addBias(bias);
         }
         this.layers[hidden.length + 2 - 1] = output;
+
+        for (Layer l : this.layers) {
+            System.out.println(l.name);
+            for (Neuron n : l.neurons) {
+                System.out.println(n.name + ", in:" + Arrays.toString(n.inputNeurons())
+                        + ", out:" + Arrays.toString(n.outputNeurons()));
+            }
+        }
     }
 
     public void train(DataSet... dataSets) {
@@ -72,6 +81,17 @@ public class NeuralNetwork {
             for (int j = 0; j < layer.biasPosition(); j++) {
                 Neuron neuron = layer.neurons[j];
                 neuron.calculateActivation();
+            }
+        }
+
+        System.out.println("y:" + Arrays.toString(this.lastLayer().outputs()));
+        if (this.lastLayer().outputs()[0] == 0.5885226669624005) {
+            for (Layer l : this.layers) {
+                System.out.println(l.name);
+                for (Neuron n : l.neurons) {
+                    System.out.println(n.name + ", in:" + Arrays.toString(n.inputNeurons())
+                            + ", out:" + Arrays.toString(n.outputNeurons()));
+                }
             }
         }
 

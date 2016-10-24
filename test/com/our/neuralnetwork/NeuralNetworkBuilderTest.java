@@ -55,4 +55,35 @@ public class NeuralNetworkBuilderTest extends NeuralNetwork {
         assertEquals(numberOfNeurons, layer.neurons.length - 1);
     }
 
+    @Test
+    public void testTrain() {
+        System.out.println("builder.train");
+        NeuralNetwork net = builder.build();
+
+        net.train(
+                new DataSet(1.0, 1.0).out(-1.0),
+                new DataSet(1.0, -1.0).out(1.0),
+                new DataSet(-1.0, 1.0).out(1.0),
+                new DataSet(-1.0, -1.0).out(-1.0)
+        );
+
+        System.out.println("iterations:" + net.iterations);
+        System.out.println("test");
+        Result result1 = net.test(new DataSet(1.0, 1.0).out(-1.0));
+        Result result2 = net.test(new DataSet(1.0, -1.0).out(1.0));
+        Result result3 = net.test(new DataSet(-1.0, 1.0).out(1.0));
+        Result result4 = net.test(new DataSet(-1.0, -1.0).out(-1.0));
+        
+        System.out.println(result1);
+        System.out.println(result2);
+        System.out.println(result3);
+        System.out.println(result4);
+
+        assertTrue(result1.ok(0.26));
+        assertTrue(result2.ok(0.26));
+        assertTrue(result3.ok(0.26));
+        assertTrue(result4.ok(0.26));
+
+    }
+
 }
