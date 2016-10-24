@@ -14,7 +14,7 @@ import java.util.Arrays;
 public class Layer {
 
     String name;
-    Neuron[] neurons;
+    public Neuron[] neurons;
 
     public static Layer withNeurons(String name, int numberOfNeurons) {
         return new Layer(name, makeNeurons(name, numberOfNeurons));

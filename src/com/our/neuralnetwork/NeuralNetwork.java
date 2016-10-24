@@ -7,7 +7,6 @@ package com.our.neuralnetwork;
 
 import com.our.neuralnetwork.activation.ActivationFunction;
 import com.our.neuralnetwork.activation.HiperbolicTangent;
-import java.util.Arrays;
 
 /**
  *
@@ -17,7 +16,7 @@ public class NeuralNetwork {
 
     protected Layer[] layers;
     public int maxIterations = 4000;
-    public int iterations;
+    protected int iterations;
     public Double bias = -1.0;
     public Double learnFactor = 0.5;
     protected DataSet currentDataSet;
@@ -45,14 +44,6 @@ public class NeuralNetwork {
             this.layers[i].addBias(bias);
         }
         this.layers[hidden.length + 2 - 1] = output;
-
-        for (Layer l : this.layers) {
-            System.out.println(l.name);
-            for (Neuron n : l.neurons) {
-                System.out.println(n.name + ", in:" + Arrays.toString(n.inputNeurons())
-                        + ", out:" + Arrays.toString(n.outputNeurons()));
-            }
-        }
     }
 
     public void train(DataSet... dataSets) {
@@ -83,18 +74,6 @@ public class NeuralNetwork {
                 neuron.calculateActivation();
             }
         }
-
-        System.out.println("y:" + Arrays.toString(this.lastLayer().outputs()));
-        if (this.lastLayer().outputs()[0] == 0.5885226669624005) {
-            for (Layer l : this.layers) {
-                System.out.println(l.name);
-                for (Neuron n : l.neurons) {
-                    System.out.println(n.name + ", in:" + Arrays.toString(n.inputNeurons())
-                            + ", out:" + Arrays.toString(n.outputNeurons()));
-                }
-            }
-        }
-
         return this.lastLayer().outputs();
     }
 
@@ -155,9 +134,29 @@ public class NeuralNetwork {
     }
 
     public Result test(DataSet dataSet) {
+        currentDataSet = dataSet;
+        for (Neuron neuron : this.inputLayer().neurons) {
+            // Put values to everyone except to the bias
+            for (int i = 0; i < neuron.inputs.size() - 1; i++) {
+                neuron.inputs.get(i).value = currentDataSet.inputs[i];
+            }
+        }
+
+        for (int i = 1; i < this.layers.length; i++) { // deep layers
+            Layer layer = this.layers[i];
+            for (int j = 0; j < layer.biasPosition(); j++) {
+                Neuron neuron = layer.neurons[j];
+                neuron.calculateActivation();
+            }
+        }
+
         return new Result(
                 dataSet.out,
-                this.feedForward(dataSet)
+                this.lastLayer().outputs()
         );
+    }
+
+    public int getIterations() {
+        return iterations;
     }
 }

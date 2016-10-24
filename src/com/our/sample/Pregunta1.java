@@ -16,7 +16,7 @@ public class Pregunta1 {
 
     public static void main(String[] args) {
         NeuralNetwork net = new NeuralNetworkBuilder(6, 1).build();
-        net.iterations = 10000;
+        net.maxIterations = 10000;
 
         DataSet[] dataSets = GetData.fromFile("src/com/our/datasources/DN80.txt");
         net.train(dataSets);
